@@ -1,12 +1,12 @@
 package br.com.escola;
 
 import java.util.Scanner;
-import br.com.escola.model.aluno;
-import br.com.escola.model.turma;
+import br.com.escola.model.Aluno;
+import br.com.escola.model.Turma;
 import br.com.escola.service.EscolaService;
 
 @SuppressWarnings("java:S106")
-public class main {
+public class Main {
 
 	public static void main(String[] args) {
 		
@@ -15,13 +15,13 @@ public class main {
 		EscolaService service = new EscolaService();
 		
 		int opcao;
-	}
+	
 		do {
 		    System.out.println("\n=====SISTEMA ESCOLAR=====/");
 		    System.out.println("1 - Cadastrar turma");
 		    System.out.println("2 - Listar turmas");
 		    System.out.println("3 - cadastrae aluno em turma");
-		    System.out.println("4 - Litar alunos de uma turma");
+		    System.out.println("4 - Listar alunos de uma turma");
 		    System.out.println("5 - sair");
 		    System.out.print("Escolha:");
 		    
@@ -32,20 +32,20 @@ public class main {
 		    case 1:
 		    	System.out.print("Nome da turma: ");
 		    	String nomeTurma = scanner.nextLine();
-		    	service.adicionarTurma(new turma(nomeTurma));
+		    	service.adicionarTurma(new Turma(nomeTurma));
 		    	System.out.println("Turma cadastrada com sucesso!");
 		    	break;
 		    	
 		    case 2:
-		    	listarTurma(service);
+		    	listarTurmas(service);
 		    	break;
 		    	
 		    case 3:
-		    	cadastraAluno(scanner, service);
+		    	cadastrarAluno(scanner, service);
 		    	break;
 		    	
 		    case 4:
-		    	listarAlunos(scanner,service);
+		    	ListarAlunos(scanner,service);
 		        break;
 		        
 		    case 5:
@@ -61,7 +61,7 @@ public class main {
 		scanner.close();
 }
 
-private static void litarTurma(EscolaService service) {
+private static void listarTurmas(EscolaService service) {
 	
 	if (service.estaVazia()) {
 		System.out.println("Nenhuma turma cadatrada ainda.");
@@ -70,7 +70,7 @@ private static void litarTurma(EscolaService service) {
 	
 	System.out.println("\n--- Turmas cadastradas ---");
 	
-	for (int i = 0; 1 < service.listarTurmas().size(); i++) {
+	for (int i = 0; i < service.listarTurmas().size(); i++) {
 		System.out.println(i+ "-" + service.listarTurmas().get(i));
 	}
 }
@@ -84,7 +84,7 @@ private static void litarTurma(EscolaService service) {
 	 System.out.println("escolha o indice da turma: ");
 	 int indice = scanner.nextInt();
 	 scanner.nextLine();
-	 turma turma = service.buscarTurma(indice);
+	 Turma turma = service.buscarTurma(indice);
 
  if(turma == null) {
 	 System.out.println("Indice invalido. Nenhuma turma encontrada.");
@@ -102,9 +102,10 @@ private static void litarTurma(EscolaService service) {
  
  turma.adicionarAluno(new Aluno(nome,nota1,nota2));
  
-System.out.println("Aluno cadatrado com sucesso!");	 
+System.out.println("Aluno cadatrado com sucesso!");
+ }
 
-private static void listarAluno(Scanner scanner, EscolaService service) {
+private static void ListarAlunos(Scanner scanner, EscolaService service) {
 	if (service.estaVazia()) {
 		System.out.println("Nenhuma turma cadastrada ainda.");
 		return;
@@ -116,7 +117,7 @@ private static void listarAluno(Scanner scanner, EscolaService service) {
 	int indice = scanner.nextInt();
 	scanner.nextLine();
 	
-	turma turma = service.buscarTurma(indice);
+	Turma turma = service.buscarTurma(indice);
 	
 	if (turma == null) {
 		System.out.println("Indice invalido. Nenhuma turma encontrada.");
@@ -125,5 +126,8 @@ private static void listarAluno(Scanner scanner, EscolaService service) {
 	if(turma.getAlunos().isEmpty()) {
 		System.out.println("Nenhum aluno cadastrado nesta turma.");
 	}
+		for(Aluno aluno: turma.getAlunos()) {
+			System.out.println(aluno);
+		}
 }
 }
